@@ -1,12 +1,20 @@
 from django.urls import path
-from .views import *
+from rest_framework_simplejwt.views import TokenRefreshView
+from .views import (RegisterView, UserListView, UserDeatilView, MeView, LoginView, LogoutView, ChangePasswordView,
+                    ResetPasswordRequestView, PasswordResetConfirmView)
+
 
 urlpatterns = [
-    path("register/", UserRegistrationView.as_view(), name='register'),
-    path("login/", UserLoginView.as_view(), name="Login"),
-    path("profile/", UserProfileView.as_view(), name="Profile"),
-    path("change_password/", UserChangePasswordView.as_view(), name="Change-Password"),
-    path("send_password_reset_email/", SendPasswordResetEmailView.as_view(), name="send-password-reset-email"),
-    path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='Reset-Password'),
-    path('regis/', RegisterView.as_view())
-]
+                path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+                path('register/', RegisterView.as_view(), name='register'),
+                path('ls/', UserListView.as_view(), name='user-list'),
+                path('detail/<int:pk>/', UserDeatilView.as_view(), name='user-detail'),
+                path('me/', MeView.as_view(), name='me'),
+
+                path('login/', LoginView.as_view(), name='login'),
+                path('logout/', LogoutView.as_view(), name='logout'),
+
+                path('pw/change/', ChangePasswordView.as_view(), name='change_password'),
+                path('pw/reset/', ResetPasswordRequestView.as_view(), name='password_reset'),
+                path('pw/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+        ]
